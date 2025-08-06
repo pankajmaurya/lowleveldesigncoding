@@ -9,7 +9,7 @@
       
   <modules>
     <module>blocking-queues</module>
-    <module>message-messageBroker</module>
+    <module>message-broker</module>
   </modules>
       
   <packaging>pom</packaging>

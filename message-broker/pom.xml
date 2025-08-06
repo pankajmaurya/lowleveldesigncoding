@@ -8,10 +8,10 @@
   </parent>
 
   <groupId>dev.lld.practice</groupId>
-  <artifactId>message-messageBroker</artifactId>
+  <artifactId>message-broker</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>message-messageBroker</name>
+  <name>message-broker</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
