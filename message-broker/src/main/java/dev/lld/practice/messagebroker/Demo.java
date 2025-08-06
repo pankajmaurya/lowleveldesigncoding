@@ -6,10 +6,10 @@ public class Demo {
 
     public static class SimplePublisher implements Runnable {
 
-        private final Broker broker;
+        private final MessageBroker messageBroker;
 
-        public SimplePublisher(Broker broker) {
-            this.broker = broker;
+        public SimplePublisher(MessageBroker messageBroker) {
+            this.messageBroker = messageBroker;
         }
 
         @Override
@@ -17,7 +17,7 @@ public class Demo {
 
             for (int i = 0; i < 10; i++) {
                 System.out.println("publishing " + i);
-                broker.publishMessage(new Message("message " + i), "topic1");
+                messageBroker.publishMessage(new Message("message " + i), "topic1");
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
@@ -25,7 +25,7 @@ public class Demo {
                 }
             }
 
-            broker.publishMessage(new Message("poison"), "topic1");
+            messageBroker.publishMessage(new Message("poison"), "topic1");
 
         }
     }
@@ -64,8 +64,8 @@ public class Demo {
     }
 
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
-        SimpleBroker simpleBroker = new SimpleBroker();
+    public static void main(String[] args) throws InterruptedException {
+        SimpleMessageBroker simpleBroker = new SimpleMessageBroker();
         simpleBroker.createTopic("topic1");
 
         SimplePublisher simplePublisher = new SimplePublisher(simpleBroker);

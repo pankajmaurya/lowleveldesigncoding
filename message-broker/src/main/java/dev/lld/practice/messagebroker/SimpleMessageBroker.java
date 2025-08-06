@@ -2,7 +2,7 @@ package dev.lld.practice.messagebroker;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class SimpleBroker implements Broker {
+public class SimpleMessageBroker implements MessageBroker {
 
     private final DeliveryStyle deliveryStyle;
     private final AckStyle ackStyle;
@@ -17,12 +17,12 @@ public class SimpleBroker implements Broker {
         ACK;
     }
 
-    public SimpleBroker() {
+    public SimpleMessageBroker() {
         this.deliveryStyle = DeliveryStyle.PUSH;
         this.ackStyle = AckStyle.NO_ACK;
     }
 
-    public SimpleBroker(DeliveryStyle deliveryStyle, AckStyle ackStyle) {
+    public SimpleMessageBroker(DeliveryStyle deliveryStyle, AckStyle ackStyle) {
         this.deliveryStyle = deliveryStyle;
         this.ackStyle = ackStyle;
     }

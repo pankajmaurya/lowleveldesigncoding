@@ -2,10 +2,10 @@ package dev.lld.practice.messagebroker;
 
 public class Consumer {
 
-    private final Broker broker;
+    private final MessageBroker broker;
 
-    public Consumer(Broker broker) {
-        this.broker = broker;
+    public Consumer(MessageBroker messageBroker) {
+        this.broker = messageBroker;
     }
 
     public Message consume(String topicName) {

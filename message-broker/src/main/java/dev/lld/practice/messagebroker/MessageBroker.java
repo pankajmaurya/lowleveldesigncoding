@@ -1,6 +1,6 @@
 package dev.lld.practice.messagebroker;
 
-public interface Broker {
+public interface MessageBroker {
 
     void createTopic(String topicName);
 
