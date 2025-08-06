@@ -1,8 +1,6 @@
 package dev.lld.practice.messagebroker;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class Demo {
 
@@ -48,6 +46,10 @@ public class Demo {
             while (true) {
 
                 Message message = consumer.consume(topicName);
+
+                if (message == null) {
+                    continue;
+                }
                 System.out.println(message.getPayload());
 
                 if (message.getPayload().equals("poison")) {
@@ -62,7 +64,7 @@ public class Demo {
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
         SimpleBroker simpleBroker = new SimpleBroker();
         simpleBroker.createTopic("topic1");
 
@@ -76,7 +78,9 @@ public class Demo {
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
         executorService.submit(simplePublisher);
-        executorService.submit(simpleSubscriber);
+        Future<?> future = executorService.submit(simpleSubscriber);
+
+        future.get();
 
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.SECONDS);
