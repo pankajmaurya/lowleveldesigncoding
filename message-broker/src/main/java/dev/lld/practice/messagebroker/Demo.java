@@ -64,7 +64,7 @@ public class Demo {
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
         SimpleMessageBroker simpleBroker = new SimpleMessageBroker();
         simpleBroker.createTopic("topic1");
 
@@ -73,7 +73,6 @@ public class Demo {
         Consumer consumer = new Consumer(simpleBroker);
 
         SimpleSubscriber simpleSubscriber = new SimpleSubscriber(consumer, "topic1");
-
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -84,8 +83,5 @@ public class Demo {
 
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.SECONDS);
-
-
-
     }
 }
