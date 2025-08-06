@@ -7,14 +7,17 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class MessageTest
 {
     /**
      * Rigorous Test :-)
      */
     @Test
-    public void shouldAnswerWithTrue()
+    public void testCreate()
     {
-        assertTrue( true );
+        Message foo = new Message("foo");
+        Message bar = new Message("bar");
+
+        assertTrue( bar.getId() == foo.getId() + 1);
     }
 }
