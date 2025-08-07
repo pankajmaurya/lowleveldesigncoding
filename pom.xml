@@ -7,6 +7,7 @@
     <module>blocking-queues</module>
     <module>message-broker</module>
     <module>scheduler-with-delay</module>
+    <module>logger</module>
   </modules>
   <packaging>pom</packaging>
   <name>lldpractice</name>
