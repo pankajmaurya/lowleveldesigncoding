@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="messagebroker" />
+        <module name="scheduler-with-delay" />
         <module name="blocking-queues" />
       </profile>
     </annotationProcessing>
