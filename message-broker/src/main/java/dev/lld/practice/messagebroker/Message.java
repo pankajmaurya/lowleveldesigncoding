@@ -13,6 +13,11 @@ public final class Message {
         this.id = idGen.getAndIncrement();
     }
 
+    Message(long id, Object payload) {
+        this.id = id;
+        this.payload = payload;
+    }
+
     public long getId() {
         return id;
     }
