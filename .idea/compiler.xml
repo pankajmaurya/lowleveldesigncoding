@@ -9,6 +9,7 @@
         <module name="messagebroker" />
         <module name="scheduler-with-delay" />
         <module name="blocking-queues" />
+        <module name="logger" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
