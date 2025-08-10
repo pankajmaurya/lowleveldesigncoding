@@ -8,10 +8,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="messagebroker" />
         <module name="scheduler-with-delay" />
+        <module name="google-calendar" />
         <module name="blocking-queues" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="logger" target="17" />
       <module name="messagedispatcher" target="1.8" />
     </bytecodeTargetLevel>
   </component>
