@@ -36,15 +36,12 @@ public class SimpleMessageBroker implements MessageBroker {
 
     @Override
     public void publishMessage(Message message, String topicName) {
-
         Topic topic = topics.get(topicName);
-
         if (topic == null) {
             throw new IllegalArgumentException("Topic not found. Create topic first");
         }
 
         topic.publishMessage(message);
-
     }
 
     @Override

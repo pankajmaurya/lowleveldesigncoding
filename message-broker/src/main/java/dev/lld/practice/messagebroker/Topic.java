@@ -23,7 +23,6 @@ public class Topic {
         synchronized (appendOnlyLog) {
             appendOnlyLog.add(message);
         }
-
     }
 
     public void subscribe(Consumer consumer) {
