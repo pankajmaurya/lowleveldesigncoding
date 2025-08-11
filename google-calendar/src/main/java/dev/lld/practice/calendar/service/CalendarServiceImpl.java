@@ -21,12 +21,17 @@ public class CalendarServiceImpl implements CalendarService {
         String eventId = calendarEventDAO.createCalendarEvent(calendarEvent);
 
         // send async notification
-        sendAsycNotification(calendarEvent);
+        sendAsyncNotification(calendarEvent);
 
         return eventId;
     }
 
-    private void sendAsycNotification(CalendarEvent calendarEvent){
+    @Override
+    public CalendarEvent getCalendarEvent(String eventId) {
+        return calendarEventDAO.getCalendarEvent(eventId);
+    }
+
+    private void sendAsyncNotification(CalendarEvent calendarEvent){
         new Thread(()-> {
             for (String inviteeEmail : calendarEvent.getInviteeEmails()) {
                 notificationService.sendNotification(calendarEvent.getSenderEmail(), inviteeEmail, calendarEvent.getTitle(),

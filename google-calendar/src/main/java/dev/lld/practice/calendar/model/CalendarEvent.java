@@ -3,11 +3,12 @@ package dev.lld.practice.calendar.model;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by gss on 10/08/25
  **/
-public class CalendarEvent {
+public class CalendarEvent implements Comparable<CalendarEvent> {
     private String eventId;
 
     private String title;
@@ -99,5 +100,22 @@ public class CalendarEvent {
 
     public void setUserToStatusMap(Map<String, Boolean> userToStatusMap) {
         this.userToStatusMap = userToStatusMap;
+    }
+
+    @Override
+    public int compareTo(CalendarEvent o) {
+        return this.fromTime.compareTo(o.fromTime);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        CalendarEvent that = (CalendarEvent) o;
+        return Objects.equals(eventId, that.eventId) && Objects.equals(title, that.title) && Objects.equals(description, that.description) && Objects.equals(senderEmail, that.senderEmail) && Objects.equals(inviteeEmails, that.inviteeEmails) && Objects.equals(fromTime, that.fromTime) && Objects.equals(toTime, that.toTime) && Objects.equals(userToStatusMap, that.userToStatusMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId, title, description, senderEmail, inviteeEmails, fromTime, toTime, userToStatusMap);
     }
 }

@@ -7,4 +7,6 @@ import dev.lld.practice.calendar.model.CalendarEvent;
  **/
 interface CalendarService {
     String createCalendarEvent(CalendarEvent calendarEvent);
+
+    CalendarEvent getCalendarEvent(String eventId);
 }
