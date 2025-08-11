@@ -14,16 +14,8 @@ public class CalendarEventDAOImpl implements CalendarEventDAO {
     @Override
     public String createCalendarEvent(CalendarEvent calendarEvent) {
         String eventId = UUID.randomUUID().toString();
-        // Not performant
-        // https://claude.ai/chat/6fa7f3a8-292a-43a9-8ae5-3f449460c0a5
-        if (!eventMap.containsValue(calendarEvent)) {
-            eventMap.putIfAbsent(eventId, calendarEvent);
-            return eventId;
-        } else {
-            return eventMap.entrySet().stream().filter(
-                    (entry -> entry.getValue().equals(calendarEvent)))
-                    .findFirst().orElseThrow().getKey();
-        }
+        eventMap.put(eventId, calendarEvent);
+        return eventId;
     }
 
     @Override

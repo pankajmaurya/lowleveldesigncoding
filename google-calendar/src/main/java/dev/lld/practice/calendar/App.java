@@ -16,8 +16,10 @@ public class App {
     public static void main( String[] args ) {
         CalendarServiceImpl calendarService = new CalendarServiceImpl(
                 new CalendarEventDAOImpl(), new EmailNotificationService());
+        ArrayList<String> inviteeEmails = new ArrayList<>();
+        inviteeEmails.add("abc@bar.com");
         String calendarEventId = calendarService.createCalendarEvent(new CalendarEvent(
-                "Test Event", "For demo", "foo@bar.com", new ArrayList<>(), new Date(), new Date()
+                "Test Event", "For demo", "foo@bar.com", inviteeEmails, new Date(), new Date()
         ));
 
         CalendarEvent calendarEvent = calendarService.getCalendarEvent(calendarEventId);
