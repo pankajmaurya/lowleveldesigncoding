@@ -19,6 +19,7 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public String createCalendarEvent(CalendarEvent calendarEvent) {
         String eventId = calendarEventDAO.createCalendarEvent(calendarEvent);
+        calendarEvent.setEventId(eventId);
 
         // send async notification
         sendAsyncNotification(calendarEvent);
@@ -31,10 +32,18 @@ public class CalendarServiceImpl implements CalendarService {
         return calendarEventDAO.getCalendarEvent(eventId);
     }
 
+    @Override
+    public void acceptEvent(String eventId, String inviteeEmail) {
+        CalendarEvent calendarEvent = calendarEventDAO.getCalendarEvent(eventId);
+        calendarEvent.getUserToStatusMap().put(inviteeEmail, true);
+        calendarEventDAO.updateCalendarEvent(calendarEvent);
+    }
+
     private void sendAsyncNotification(CalendarEvent calendarEvent){
         new Thread(()-> {
             for (String inviteeEmail : calendarEvent.getInviteeEmails()) {
-                notificationService.sendNotification(calendarEvent.getSenderEmail(), inviteeEmail, calendarEvent.getTitle(),
+                notificationService.sendNotification(calendarEvent.getSenderEmail(), inviteeEmail,
+                        calendarEvent.getTitle(),calendarEvent.getEventId(),
                         calendarEvent.getDescription());
             }
         }).start();

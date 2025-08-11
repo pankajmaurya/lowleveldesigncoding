@@ -1,9 +1,6 @@
 package dev.lld.practice.calendar.model;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created by gss on 10/08/25
@@ -23,7 +20,7 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
 
     private Date toTime;
 
-    private Map<String, Boolean> userToStatusMap;
+    private Map<String, Boolean> userToStatusMap = new HashMap<>();
 
     public CalendarEvent() {
     }

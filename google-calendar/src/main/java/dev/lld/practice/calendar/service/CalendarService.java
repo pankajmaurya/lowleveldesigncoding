@@ -9,4 +9,6 @@ interface CalendarService {
     String createCalendarEvent(CalendarEvent calendarEvent);
 
     CalendarEvent getCalendarEvent(String eventId);
+
+    void acceptEvent(String eventId, String inviteeEmail);
 }
