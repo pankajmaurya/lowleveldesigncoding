@@ -7,11 +7,13 @@ class LoggerExample {
     public static void main(String[] args) throws InterruptedException {
         // Initialize logger with file output
         MultiThreadedLogger logger = new MultiThreadedLogger(
-                "application.log",
+                "application-run-flushevery100-run2.log",
                 LogLevel.DEBUG,
-                true,
+                false,
                 1000
         );
+
+        long start = System.currentTimeMillis();
 
         // Test single-threaded logging
         logger.info("Application starting");
@@ -33,7 +35,7 @@ class LoggerExample {
         for (int i = 0; i < 5; i++) {
             final int threadNum = i;
             executor.submit(() -> {
-                for (int j = 0; j < 10; j++) {
+                for (int j = 0; j < 1000; j++) {
                     logger.info("Thread %d - Message %d", threadNum, j);
                     logger.debug("Thread %d - Debug %d", threadNum, j);
 
@@ -65,5 +67,12 @@ class LoggerExample {
 
         // Shutdown logger
         logger.shutdown();
+
+        Logger.info("After shutdown: Using singleton logger");
+        Logger.error("After shutdown: Singleton error message");
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("Total time = " + (end - start));
     }
 }

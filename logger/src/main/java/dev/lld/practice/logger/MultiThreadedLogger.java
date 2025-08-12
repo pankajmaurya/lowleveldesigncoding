@@ -4,6 +4,7 @@ import java.io.*;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 // Main logger class
 public class MultiThreadedLogger {
@@ -16,6 +17,9 @@ public class MultiThreadedLogger {
     private volatile LogLevel minLevel;
     private volatile boolean consoleOutput;
     private final int maxQueueSize;
+
+    private AtomicInteger unflushedLogs = new AtomicInteger(0);
+    private static final Integer MAX_UNFLUSHED_LOGS = 100;
 
     private static final DateTimeFormatter TIMESTAMP_FORMAT =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
@@ -45,14 +49,19 @@ public class MultiThreadedLogger {
         }
         this.fileWriter = writer;
 
-        // Start worker thread
-        this.executor = Executors.newSingleThreadExecutor(r -> {
-            Thread t = new Thread(r, "LoggerWorker");
-            t.setDaemon(true);
-            return t;
-        });
 
+        this.executor = Executors.newFixedThreadPool(2);
         this.executor.submit(this::workerLoop);
+        this.executor.submit(this::workerLoop);
+
+//        // Start worker thread
+//        this.executor = Executors.newSingleThreadExecutor(r -> {
+//            Thread t = new Thread(r, "LoggerWorker");
+//            t.setDaemon(true);
+//            return t;
+//        });
+//
+//        this.executor.submit(this::workerLoop);
 
         // Add shutdown hook to ensure graceful shutdown
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
@@ -64,7 +73,7 @@ public class MultiThreadedLogger {
             try {
                 LogEntry entry = logQueue.poll(100, TimeUnit.MILLISECONDS);
                 if (entry != null) {
-                    writeLog(entry);
+                    writeLog(entry, unflushedLogs.incrementAndGet() >= MAX_UNFLUSHED_LOGS);
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -74,7 +83,7 @@ public class MultiThreadedLogger {
     }
 
     // Write log entry to file and/or console
-    private void writeLog(LogEntry entry) {
+    private void writeLog(LogEntry entry, boolean flush) {
         if (entry.getLevel().getValue() < minLevel.getValue()) {
             return;
         }
@@ -85,7 +94,10 @@ public class MultiThreadedLogger {
             // Write to file
             if (fileWriter != null) {
                 fileWriter.println(formattedMessage);
-                fileWriter.flush();
+                if (flush) {
+                    fileWriter.flush();
+                    unflushedLogs.set(0);
+                }
             }
 
             // Write to console
@@ -106,18 +118,7 @@ public class MultiThreadedLogger {
         }
 
         LogEntry entry = new LogEntry(level, message);
-
-        // Try to add to queue, drop if full
-        if (!logQueue.offer(entry)) {
-            // Queue is full, could implement different strategies here:
-            // 1. Drop oldest message and add new one
-            // 2. Drop the new message
-            // 3. Block until space is available
-
-            // Strategy 1: Drop oldest and add new
-            logQueue.poll();
-            logQueue.offer(entry);
-        }
+        logQueue.offer(entry);
     }
 
     // Shutdown the logger gracefully
