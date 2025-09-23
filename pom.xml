@@ -8,6 +8,7 @@
     <module>message-broker</module>
     <module>scheduler-with-delay</module>
     <module>google-calendar</module>
+    <module>word-count-data-structure</module>
   </modules>
   <packaging>pom</packaging>
   <name>lldpractice</name>

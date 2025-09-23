@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-
         <module name="message-broker" />
+        <module name="messagebroker" />
         <module name="scheduler-with-delay" />
         <module name="google-calendar" />
         <module name="blocking-queues" />
+        <module name="word-count-data-structure" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
