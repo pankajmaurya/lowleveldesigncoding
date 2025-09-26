@@ -7,11 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="message-broker" />
+        <module name="google-calendar" />
+        <module name="word-count-data-structure" />
         <module name="messagebroker" />
         <module name="scheduler-with-delay" />
-        <module name="google-calendar" />
+        <module name="string-check-subsequences" />
         <module name="blocking-queues" />
-        <module name="word-count-data-structure" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

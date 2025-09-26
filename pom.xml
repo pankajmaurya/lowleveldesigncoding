@@ -9,6 +9,7 @@
     <module>scheduler-with-delay</module>
     <module>google-calendar</module>
     <module>word-count-data-structure</module>
+    <module>string-check-subsequences</module>
   </modules>
   <packaging>pom</packaging>
   <name>lldpractice</name>
