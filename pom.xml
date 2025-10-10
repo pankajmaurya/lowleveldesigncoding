@@ -10,6 +10,7 @@
     <module>google-calendar</module>
     <module>word-count-data-structure</module>
     <module>string-check-subsequences</module>
+    <module>cloud-build</module>
   </modules>
   <packaging>pom</packaging>
   <name>lldpractice</name>

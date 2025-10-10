@@ -9,8 +9,12 @@ public class Scheduler implements SchedulerApi {
     private AtomicBoolean isShutdown = new AtomicBoolean(false);
     private AtomicInteger size = new AtomicInteger(0);
     private Object pqLock = new Object();
-
     private SchedulerThread schedulerThread = new SchedulerThread();
+    private final PriorityQueue<Task> priorityQueue;
+
+    public Scheduler() {
+        priorityQueue = new PriorityQueue<>();
+    }
 
     public boolean shutdown() {
         this.isShutdown.compareAndSet(false, true);
@@ -45,7 +49,9 @@ public class Scheduler implements SchedulerApi {
         }
     }*/
 
+
     private final class SchedulerThread extends Thread {
+
         @Override
         public void run() {
             while (true) {
@@ -132,8 +138,5 @@ public class Scheduler implements SchedulerApi {
             return taskName;
         }
     }
-    private final PriorityQueue<Task> priorityQueue;
-    public Scheduler() {
-        priorityQueue = new PriorityQueue<>();
-    }
+
 }
